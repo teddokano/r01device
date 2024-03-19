@@ -42,6 +42,10 @@
 #include "tzfile.h"
 #include "strptime.h"
 
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
 // Android: ignore OpenBSD's DEF_WEAK() stuff.
 #define DEF_WEAK(sym) /* */
 // Android: this code is not pointer-sign clean.
@@ -49,6 +53,12 @@
 #pragma clang diagnostic ignored "-Wunused-function"
 // Android: clang thinks people don't know && has higher precedence than ||.
 #pragma clang diagnostic ignored "-Wlogical-op-parentheses"
+
+#pragma GCC diagnostic pop
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpointer-sign"
+
 
 #define	_ctloc(x)		(_CurrentTimeLocale->x)
 
@@ -635,8 +645,11 @@ epoch_to_tm(const unsigned char **buf, struct tm *tm)
 	secs = strtoll(*buf, &ep, 10);
 	if (*buf == (unsigned char *)ep)
 		goto done;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wparentheses"
 	if (secs < 0 ||
 	    secs == LLONG_MAX && errno == ERANGE)
+#pragma GCC diagnostic pop
 		goto done;
 	if (localtime_r(&secs, tm) == NULL)
 		goto done;
@@ -675,3 +688,5 @@ leaps_thru_end_of(const int y)
 	return (y >= 0) ? (y / 4 - y / 100 + y / 400) :
 		-(leaps_thru_end_of(-(y + 1)) + 1);
 }
+
+#pragma GCC diagnostic pop  // for "-Wpointer-sign"
