@@ -12,6 +12,11 @@
 #include "I2C_device.h"
 #include <stdint.h>
 
+#ifdef	CPU_MCXN947VDF
+#undef	PWM0	//	To avoid name conflicts with MCXN947_cm33_core0.h
+#undef	PWM1	//	To avoid name conflicts with MCXN947_cm33_core0.h
+#endif
+
 enum access_word : uint8_t
 {
 	SETTING,
