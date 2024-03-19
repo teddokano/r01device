@@ -5,6 +5,9 @@ extern "C" {
 #include "fsl_debug_console.h"
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmisleading-indentation"
+
 I3C_Device::I3C_Device( I2C &i2c, uint8_t address ) : _i2c( i2c ), _addr( address )
 {	
 }
@@ -139,3 +142,4 @@ P3T1755::operator float()
 	return temp();
 }
 
+#pragma GCC diagnostic pop
