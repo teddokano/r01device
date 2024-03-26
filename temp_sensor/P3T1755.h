@@ -19,8 +19,8 @@ public:
 	
 	void				address_overwrite( uint8_t address );
 
-	virtual void		ccc_set( uint8_t ccc, uint8_t data );
-	virtual uint8_t*	ccc_get( uint8_t ccc, uint8_t *dp, uint8_t length );
+	virtual void		ccc_set( CCC ccc, uint8_t data );
+	virtual uint8_t*	ccc_get( CCC ccc, uint8_t *dp, uint8_t length );
 
 protected:
 	I2C&	_i2c;

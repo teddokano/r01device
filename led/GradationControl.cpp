@@ -174,7 +174,7 @@ void GradationControl::start( bool continuous )
 
 void GradationControl::stop( void )
 {
-	control( STOP );
+	control( GRADATION_STOP );
 }
 
 

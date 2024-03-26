@@ -19,12 +19,12 @@ void I3C_Device::address_overwrite( uint8_t address )
 	_addr	= address;
 }
 
-void I3C_Device::ccc_set( uint8_t ccc, uint8_t data )
+void I3C_Device::ccc_set( CCC ccc, uint8_t data )
 {
 	_i2c.ccc_set( ccc, _addr, data );
 }
 
-uint8_t* I3C_Device::ccc_get( uint8_t ccc, uint8_t *dp, uint8_t length )
+uint8_t* I3C_Device::ccc_get( CCC ccc, uint8_t *dp, uint8_t length )
 {
 	_i2c.ccc_get( ccc, _addr, dp, length );
 	
@@ -91,7 +91,7 @@ int16_t P3T1755::read( uint8_t reg )
 
 void P3T1755::info( void )
 {
-	uint8_t		pid[ PID_LENGTH ];
+	uint8_t		pid[ I3C::PID_LENGTH ];
 	uint8_t		bcr, dcr;
 
 	float	t	= temp();
@@ -110,7 +110,7 @@ void P3T1755::info( void )
 	PRINTF( "  - T_HIGH (0x3): 0x%04X (%8.4f˚C)\r\n", (uint16_t)P3T1755::celsius2short( h ), h );
 
 	PRINTF( "  * PID    (CCC:Provisioned ID)                 : 0x" );
-	for ( int i = 0; i < PID_LENGTH; i++ ) PRINTF( " %02X", pid[ i ] );	PRINTF( "\r\n" );
+	for ( int i = 0; i < I3C::PID_LENGTH; i++ ) PRINTF( " %02X", pid[ i ] );	PRINTF( "\r\n" );
 	PRINTF( "  * BCR    (CCC:Bus Characteristics Register)   : 0x%02X\r\n", bcr );
 	PRINTF( "  * DCR    (CCC:Device Characteristics Register): 0x%02X (= %s)\r\n", dcr, (0x63 == dcr) ? "Temperature sensor" : "Unknown" );
 
